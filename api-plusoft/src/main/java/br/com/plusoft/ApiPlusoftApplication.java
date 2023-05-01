@@ -1,4 +1,4 @@
-package br.com.plusoft.apiplusoft;
+package br.com.plusoft;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
