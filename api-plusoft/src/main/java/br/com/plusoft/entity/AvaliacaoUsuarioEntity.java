@@ -1,4 +1,4 @@
-package br.com.plusoft.entities;
+package br.com.plusoft.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
