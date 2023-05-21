@@ -1,5 +1,6 @@
-package br.com.plusoft.entities;
+package br.com.plusoft.entity;
 
+import br.com.plusoft.dto.CadastroUsuarioDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class UsuarioEntity {
     private Long id;
 
     @Column(name="NM_USUARIO")
-    private String name;
+    private String nome;
 
     @Column(name="SOBRENOME_USUARIO")
     private String sobrenome;
@@ -42,6 +43,19 @@ public class UsuarioEntity {
 
     @OneToMany(mappedBy = "usuario")
     private List<SoftwareGestaoEntity> softwares;
+
+    @Column(name = "ATIVO", columnDefinition = "BIT")
+    private boolean ativo;
+
+
+    public UsuarioEntity(CadastroUsuarioDto dados) {
+        this.ativo = true;
+        this.nome = dados.nome();
+        this.sobrenome = dados.sobrenome();
+        this.email = dados.email();
+        this.senha = dados.senha();
+        this.dataCadastro = LocalDate.now();
+    }
 
 
 }

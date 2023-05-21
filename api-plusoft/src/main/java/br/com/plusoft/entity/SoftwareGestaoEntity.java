@@ -1,5 +1,6 @@
-package br.com.plusoft.entities;
+package br.com.plusoft.entity;
 
+import br.com.plusoft.dto.CadastroSoftwareGestaoDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,5 +44,16 @@ public class SoftwareGestaoEntity {
     @ManyToOne
     @JoinColumn(name="ID_AVALIACAO")
     private AvaliacaoUsuarioEntity avaliacao;
+
+    @Column(name = "ATIVO", columnDefinition = "BIT")
+    private boolean ativo;
+
+
+    public SoftwareGestaoEntity(CadastroSoftwareGestaoDto softwareGestaoDto) {
+        this.nome = softwareGestaoDto.nome();
+        this.descricao = softwareGestaoDto.descricao();
+        this.linkDownload = softwareGestaoDto.linkDownload();
+        this.ativo = true;
+    }
 
 }

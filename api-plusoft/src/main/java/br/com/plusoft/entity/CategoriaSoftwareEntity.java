@@ -1,5 +1,6 @@
-package br.com.plusoft.entities;
+package br.com.plusoft.entity;
 
+import br.com.plusoft.dto.CadastroCategoriaSoftwareDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class CategoriaSoftwareEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name="iD_CATEGORIA")
+    @Column(name="ID_CATEGORIA")
     private Long id;
 
     @Column(name="NM_CATEGORIA")
@@ -29,4 +30,13 @@ public class CategoriaSoftwareEntity {
 
     @OneToMany(mappedBy = "categoria")
     private List<SoftwareGestaoEntity> softwares;
+
+    @Column(name = "ATIVO", columnDefinition = "BIT")
+    private boolean ativo;
+
+    public CategoriaSoftwareEntity(CadastroCategoriaSoftwareDto categoriaDto) {
+        this.nome = categoriaDto.nome();
+        this.descricao = categoriaDto.descricao();
+        this.ativo = true;
+    }
 }
