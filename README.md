@@ -15,13 +15,13 @@ Requisição:
 POST /usuarios HTTP/1.1
 Content-Type: application/json
 
-[
-  {
-    "nome": "Nome do Usuário",
-    "email": "email@example.com",
-    "senha": "senha123"
-  }
-]
+      [
+            {
+              "nome": "Nome do Usuário",
+              "email": "email@example.com",
+              "senha": "senha123"
+            }
+      ]
 
 Resposta:
 HTTP/1.1 201 Created
@@ -42,18 +42,18 @@ Resposta:
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-[
-  {
-    "id": 1,
-    "nome": "Nome do Usuário",
-    "email": "email@example.com"
-  },
-  {
-    "id": 2,
-    "nome": "Outro Usuário",
-    "email": "outro@example.com"
-  }
-]
+      [
+        {
+          "id": 1,
+          "nome": "Nome do Usuário",
+          "email": "email@example.com"
+        },
+        {
+          "id": 2,
+          "nome": "Outro Usuário",
+          "email": "outro@example.com"
+        }
+      ]
 
 
 Listar Todos os Usuários
@@ -67,23 +67,23 @@ Resposta:
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-[
-  {
-    "id": 1,
-    "nome": "Nome do Usuário",
-    "email": "email@example.com"
-  },
-  {
-    "id": 2,
-    "nome": "Outro Usuário",
-    "email": "outro@example.com"
-  },
-  {
-    "id": 3,
-    "nome": "Usuário Inativo",
-    "email": "inativo@example.com"
-  }
-]
+    [
+      {
+        "id": 1,
+        "nome": "Nome do Usuário",
+        "email": "email@example.com"
+      },
+      {
+        "id": 2,
+        "nome": "Outro Usuário",
+        "email": "outro@example.com"
+      },
+      {
+        "id": 3,
+        "nome": "Usuário Inativo",
+        "email": "inativo@example.com"
+      }
+    ]
 
 
 Atualizar Usuário
@@ -94,11 +94,11 @@ Requisição:
 PUT /usuarios HTTP/1.1
 Content-Type: application/json
 
-{
-  "id": 1,
-  "nome": "Nome Atualizado",
-  "email": "email@example.com"
-}
+    {
+      "id": 1,
+      "nome": "Nome Atualizado",
+      "email": "email@example.com"
+    }
 
 Resposta:
 HTTP/1.1 200 OK
