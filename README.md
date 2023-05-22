@@ -15,11 +15,13 @@ Requisição:
 POST /usuarios HTTP/1.1
 Content-Type: application/json
 
-{
-  "nome": "Nome do Usuário",
-  "email": "email@example.com",
-  "senha": "senha123"
-}
+[
+  {
+    "nome": "Nome do Usuário",
+    "email": "email@example.com",
+    "senha": "senha123"
+  }
+]
 
 Resposta:
 HTTP/1.1 201 Created
