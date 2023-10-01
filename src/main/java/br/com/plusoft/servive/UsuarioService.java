@@ -25,19 +25,10 @@ public class UsuarioService {
 		repository.save(new UsuarioEntity(usuarioDto));
 	}
 
-//    public Page<ListarUsuarioDto> listar(Pageable paginacao) {
-//        return repository.findAllByAtivoTrue(paginacao).map(ListarUsuarioDto::new);
-//    }
-//
-//    public Page<ListarUsuarioDto> listarAtivosEInativos(Pageable paginacao) {
-//        return repository.findAll(paginacao).map(ListarUsuarioDto::new);
-//    }
-//    
-	
 	public Optional<UsuarioEntity> findByEmailSenha(String email, String senha) {
-        return repository.findByEmailAndSenha(email, senha);
-    }
-	
+		return repository.findByEmailAndSenha(email, senha);
+	}
+
 	public List<CadastroUsuarioDto> listarTodos() {
 		List<UsuarioEntity> usuarios = repository.findAll();
 		return usuarios.stream().map(this::mapToDto).collect(Collectors.toList());
