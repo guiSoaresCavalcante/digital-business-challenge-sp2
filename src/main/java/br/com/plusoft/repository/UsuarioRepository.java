@@ -1,0 +1,22 @@
+package br.com.plusoft.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+
+import br.com.plusoft.entity.UsuarioEntity;
+
+@Repository
+public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
+
+
+    Page<UsuarioEntity> findAllByAtivoTrue(Pageable paginacao);
+    UsuarioEntity findByEmail(String email);
+    
+    Optional<UsuarioEntity> findByEmailAndSenha(String email, String senha);
+}
