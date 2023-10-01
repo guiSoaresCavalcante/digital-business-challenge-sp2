@@ -14,4 +14,4 @@ services:
           cpus: '0.50'
           memory: 1042M
     ports:
-      - "8383:8383" 
+      - "8080:8080" 
