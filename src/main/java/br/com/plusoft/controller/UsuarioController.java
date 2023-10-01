@@ -46,22 +46,14 @@ public class UsuarioController {
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody CadastroUsuarioDto loginRequest) {
-        // Faça a validação e autenticação do usuário aqui, usando o serviço.
-        // Aqui, você pode chamar o método findByEmailSenha do serviço.
-
-        // Suponha que você recebe o email e a senha no objeto loginRequest.
         String email = loginRequest.email();
         String senha = loginRequest.senha();
 
-        // Chame o serviço para verificar as credenciais do usuário.
         Optional<UsuarioEntity> usuario = service.findByEmailSenha(email, senha);
 
         if (usuario.isPresent()) {
-            // Usuário autenticado com sucesso.
-            // Você pode gerar um token de autenticação ou retornar o usuário, dependendo do seu caso de uso.
             return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
         } else {
-            // Credenciais inválidas ou usuário não encontrado.
             return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
         }
     }

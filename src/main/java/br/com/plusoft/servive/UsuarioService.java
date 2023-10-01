@@ -35,9 +35,6 @@ public class UsuarioService {
 //    
 	
 	public Optional<UsuarioEntity> findByEmailSenha(String email, String senha) {
-        // Implemente a lógica para buscar um usuário por email e senha no banco de dados.
-        // A forma exata de fazer isso depende do seu modelo de dados e da sua implementação
-        // do repositório. Suponha que você tenha um método findByEmailAndSenha no seu repositório.
         return repository.findByEmailAndSenha(email, senha);
     }
 	
