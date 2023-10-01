@@ -29,74 +29,60 @@ import jakarta.validation.Valid;
 @RequestMapping("usuarios")
 public class UsuarioController {
 
+	@Autowired
+	private UsuarioService service;
 
-    @Autowired
-    private UsuarioService service;
+	@PostMapping("/cadastrar")
+	@Transactional
+	public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastroUsuarioDto usuario) {
+		try {
+			service.cadastrar(usuario);
+			return ResponseEntity.created(URI.create("/" + usuario.nome())).body("Usuario Cadastrado");
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
 
-    @PostMapping("/cadastrar")
-    @Transactional
-    public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastroUsuarioDto usuario) {
-        try {
-            service.cadastrar(usuario);
-            return ResponseEntity.created(URI.create("/" + usuario.nome())).body("Usuario Cadastrado");
-        } catch (Exception e) {
-            return ResponseEntity.unprocessableEntity().body(e.getMessage());
-        }
-    }
-    
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody CadastroUsuarioDto loginRequest) {
-        String email = loginRequest.email();
-        String senha = loginRequest.senha();
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody CadastroUsuarioDto loginRequest) {
+		String email = loginRequest.email();
+		String senha = loginRequest.senha();
 
-        Optional<UsuarioEntity> usuario = service.findByEmailSenha(email, senha);
+		Optional<UsuarioEntity> usuario = service.findByEmailSenha(email, senha);
 
-        if (usuario.isPresent()) {
-            return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
-        }
-    }
-    
-    
+		if (usuario.isPresent()) {
+			return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Credenciais inválidas", HttpStatus.UNAUTHORIZED);
+		}
+	}
 
-//    @GetMapping("/ativos")
-//    public ResponseEntity<Page<ListarUsuarioDto>> listar(Pageable paginacao) {
-//        return ResponseEntity.ok(service.listar(paginacao));
-//    }
+	@GetMapping("/todos")
+	public ResponseEntity<List<CadastroUsuarioDto>> listarAtivosEInativos() {
+		return ResponseEntity.ok(service.listarTodos());
+	}
 
-//    @GetMapping("/todos")
-//    public ResponseEntity<Page<ListarUsuarioDto>> listarAtivosEInativos(Pageable paginacao) {
-//        return ResponseEntity.ok(service.listarAtivosEInativos(paginacao));
-//    }
-    
-    @GetMapping("/todos")
-    public ResponseEntity<List<CadastroUsuarioDto>> listarAtivosEInativos() {
-        return ResponseEntity.ok(service.listarTodos());
-    }
+	@PutMapping
+	@Transactional
+	public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarUsuarioDto usuarioDto) {
+		try {
+			service.atualizar(usuarioDto);
+			return ResponseEntity.ok("Usuário atualizado com sucesso");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body("Usuário não encontrado");
+		}
+	}
 
-    @PutMapping
-    @Transactional
-    public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarUsuarioDto usuarioDto) {
-        try {
-            service.atualizar(usuarioDto);
-            return ResponseEntity.ok("Usuário atualizado com sucesso");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Usuário não encontrado");
-        }
-    }
-
-
-    @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity<String> deletar(@PathVariable Long id) {
-        try {
-            service.deletar(id);
-            return ResponseEntity.ok("Usuário deletado com sucesso");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Usuário não encontrado.");
-        }
-    }
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<String> deletar(@PathVariable Long id) {
+		try {
+			service.deletar(id);
+			return ResponseEntity.ok("Usuário deletado com sucesso");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body("Usuário não encontrado.");
+		}
+	}
 }
