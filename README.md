@@ -1,5 +1,5 @@
 # digital-business-api
-Repositório referente a api em Spring boot 
+Repositório referente a api em Spring boot
 ### Versão do Java: 17.0.5
 
 ### Cadastrar Usuário
