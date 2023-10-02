@@ -6,6 +6,6 @@ public record AtualizarUsuarioDto(
         @NotNull
         Long id,
         String nome,
-        String sobrenome
+        String email
 ) {
 }
