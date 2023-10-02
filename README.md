@@ -1,4 +1,4 @@
-# digital-business-challenge
+# digital-business-api
 Repositório referente a api em Spring boot para a entrega da sprint 4 do challenge plusoft
 
 ### Versão do Java: 17.0.5
