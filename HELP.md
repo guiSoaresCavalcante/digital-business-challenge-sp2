@@ -14,7 +14,6 @@ For further reference, please consider the following sections:
 ### Guides
 The following guides illustrate how to use some features concretely:
 
-
 * [Validation](https://spring.io/guides/gs/validating-form-input/)
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)

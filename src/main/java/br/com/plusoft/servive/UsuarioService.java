@@ -25,10 +25,19 @@ public class UsuarioService {
 		repository.save(new UsuarioEntity(usuarioDto));
 	}
 
+//    public Page<ListarUsuarioDto> listar(Pageable paginacao) {
+//        return repository.findAllByAtivoTrue(paginacao).map(ListarUsuarioDto::new);
+//    }
+//
+//    public Page<ListarUsuarioDto> listarAtivosEInativos(Pageable paginacao) {
+//        return repository.findAll(paginacao).map(ListarUsuarioDto::new);
+//    }
+//    
+	
 	public Optional<UsuarioEntity> findByEmailSenha(String email, String senha) {
-		return repository.findByEmailAndSenha(email, senha);
-	}
-
+        return repository.findByEmailAndSenha(email, senha);
+    }
+	
 	public List<CadastroUsuarioDto> listarTodos() {
 		List<UsuarioEntity> usuarios = repository.findAll();
 		return usuarios.stream().map(this::mapToDto).collect(Collectors.toList());
@@ -42,8 +51,8 @@ public class UsuarioService {
 				usuarioAtualizado.setNome(usuarioDto.nome());
 			}
 
-			if (usuarioDto.email() != null) {
-				usuarioAtualizado.setEmail(usuarioDto.email());
+			if (usuarioDto.sobrenome() != null) {
+				usuarioAtualizado.setSobrenome(usuarioDto.sobrenome());
 			}
 		} else {
 			throw new IllegalArgumentException("Usuário não encontrado");
