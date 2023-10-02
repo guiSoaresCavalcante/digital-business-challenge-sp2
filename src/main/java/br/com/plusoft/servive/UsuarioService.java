@@ -42,8 +42,8 @@ public class UsuarioService {
 				usuarioAtualizado.setNome(usuarioDto.nome());
 			}
 
-			if (usuarioDto.sobrenome() != null) {
-				usuarioAtualizado.setSobrenome(usuarioDto.sobrenome());
+			if (usuarioDto.email() != null) {
+				usuarioAtualizado.setEmail(usuarioDto.email());
 			}
 		} else {
 			throw new IllegalArgumentException("Usuário não encontrado");
