@@ -1,6 +1,5 @@
 # digital-business-api
-Repositório referente a api em Spring boot para a entrega da sprint 4 do challenge plusoft
-
+Repositório referente a api em Spring boot 
 ### Versão do Java: 17.0.5
 
 ### Cadastrar Usuário
