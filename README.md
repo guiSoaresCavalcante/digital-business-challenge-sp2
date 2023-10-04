@@ -160,7 +160,7 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 * **Somente é possível habilitar o GitHub Actions na criação do Web App com o SO Windows. Para Linux, deverá ser efetuado depois da criação do Recurso (Web App) através do Centro de Implantação.**
 * **Na aba Implantação, deixe o opção de Habilitar a Implantação Contínua e autorize o acesso do Azure em sua conta no GitHub.**
 * **Na aba Implantação, informe sua conta no GitHub, qual o Repositório e Branch para o Build e Deploy.**
-* **Ainda na aba Implantação, analise juntamente com seu Professor o arquivo YML gerado.**
+* **Ainda na aba Implantação, analise o arquivo YML gerado.**
 * **Na aba Rede, deixe o Acesso Público Ativado.**
 * **Na aba Monitoramento, deixe o Application Insights desabilitado para esse projeto.**
 * **Não usaremos Rótulos para esses Recursos.**
