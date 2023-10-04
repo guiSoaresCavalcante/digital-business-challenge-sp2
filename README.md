@@ -109,7 +109,7 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 
 **Testando a API com o Swagger:**
 
-1. Insira o URL do seu aplicativo Web com o sufixo `/swagger-ui/index.html#/`.
+1. Insira a URL do web app com o sufixo `/swagger-ui/index.html#/` para ter acesso a todos os endpoints da aplicação.
 2. Ira listar todos os endpoints em nossa aplicação.
 3. abaixo algumas fotos realizando um solicitação HTTP do tipo **POST** & **GET**.
 
