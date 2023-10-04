@@ -120,6 +120,40 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 ![alt text](./imgs/post5.png)
 ![alt text](./imgs/post6.png)
 
+- um exemplo de json para controler de usuário
+
+- **POST** /usuarios/login:
+```
+{
+  "nome": "Leonardo Figueiras",
+  "email": "leo.figueiras@shareasale.com",
+  "senha": "lZ4'T*c2ny>1a#J!n~j\\"
+}
+```
+
+- **POST** /usuarios/cadastrar:
+```
+{
+  "nome": "Leonardo Figueiras",
+  "email": "leo.figueiras@shareasale.com",
+  "senha": "lZ4'T*c2ny>1a#J!n~j\\"
+}
+```
+
+- **PUT** /usuarios/:
+```
+{
+  "id": 0,
+  "nome": "string",
+  "sobrenome": "string"
+}
+
+```
+
+- **GET** /usuarios/todos (sem body!)
+
+
+- **DELETE**/usuarios/{id} (sem body!)
 
 
 
