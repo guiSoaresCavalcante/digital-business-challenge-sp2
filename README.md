@@ -163,5 +163,3 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 * **Ainda na aba Implantação, analise o arquivo YML gerado.**
 * **Na aba Rede, deixe o Acesso Público Ativado.**
 * **Na aba Monitoramento, deixe o Application Insights desabilitado para esse projeto.**
-* **Não usaremos Rótulos para esses Recursos.**
-
