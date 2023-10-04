@@ -111,7 +111,16 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 
 1. Insira o URL do seu aplicativo Web com o sufixo `/swagger-ui/index.html#/`.
 2. Ira listar todos os endpoints em nossa aplicação.
-3. abaixo uma foto realizando um solicitação HTTP do tipo **GET**.
+3. abaixo algumas fotos realizando um solicitação HTTP do tipo **POST** & **GET**.
+
+![alt text](./imgs/post1.png)
+![alt text](./imgs/post2.png)
+![alt text](./imgs/post3.png)
+![alt text](./imgs/post4.png)
+![alt text](./imgs/post5.png)
+![alt text](./imgs/post6.png)
+
+
 
 
 **Observações:**
