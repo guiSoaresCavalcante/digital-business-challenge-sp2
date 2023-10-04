@@ -28,7 +28,7 @@ az sql server create --location brazilsouth --resource-group gruporecursos --nam
 ```
 az sql db create --resource-group gruporecursos --server sqlserver-app --name dbapp --service-objective basic --backup-storage-redundancy local --zone-redundant false
 ```
--- apenas para testes! esse regra permite acesso indefinido 
+- apenas para testes! esse regra permite acesso indefinido 
 
 ```
 az sql server firewall-rule create --resource-group gruporecursos --server sqlserver-app --name allowall --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255 
