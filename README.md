@@ -1,4 +1,4 @@
-# Api em Java SpringBoot Deploy no Azure
+# Api em Java SpringBoot Deploy no Azure.
 
 **Passo a passo para fazer deploy de uma aplicação Spring Boot no Azure, como um web app, com o código fonte da aplicação no GitHub:**
 
@@ -120,7 +120,7 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 ![alt text](./imgs/post5.png)
 ![alt text](./imgs/post6.png)
 
-- um exemplo de json para controler de usuário
+- Um exemplo de json para controler de usuário
 
 - **POST** /usuarios/login:
 ```
@@ -152,9 +152,7 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 
 - **GET** /usuarios/todos (sem body!)
 
-
 - **DELETE**/usuarios/{id} (sem body!)
-
 
 
 **Observações:**
