@@ -68,3 +68,59 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 **Passo 5: Implantar o aplicativo no Azure**
 
 1. No Eclipse, clique com o botão direito do mouse no projeto Spring Boot e selecione **Azure** > **Publish as Azure Web App
+
+2. **Documentação para implantação de uma aplicação Spring Boot no Azure usando GitHub Actions**
+
+**Pré-requisitos**
+
+* Conta da Microsoft Azure
+* Grupo de recursos no Azure
+* Plano de serviço do Azure
+* Serviço de aplicativo no Azure
+* Código-fonte da aplicação Spring Boot no GitHub
+* GitHub Actions configurado no repositório do GitHub
+
+**Passo 1: Criar o serviço de aplicativo no Azure**
+
+1. Acesse o portal da Azure.
+2. No menu **Web Apps**, clique em **Create**.
+3. Na página **Create Web App**, insira as seguintes informações:
+    * **Nome:** api-spring-boot-xx
+    * **Região:** Brasil South
+    * **Plano de serviço:** F1
+    * **Tipo de aplicativo:** Java
+    * **Tipo de implantação:** Automático
+
+4. Na aba **Implementação**, selecione a opção **GitHub Actions** e clique em **Criar**.
+5. Na aba **GitHub Actions**, insira as seguintes informações:
+    * **Repositorio:** A URL do repositório do GitHub do seu projeto Spring Boot.
+    * **Branch:** A branch que você deseja implantar.
+6. Clique em **Salvar**.
+
+**Passo 2: Implantar o aplicativo no Azure**
+
+1. No repositório do GitHub, faça um commit e push das alterações no código-fonte da aplicação.
+2. No portal da Azure, aguarde a conclusão da implantação.
+
+**Passo 3: Testar o aplicativo**
+
+1. Abra o navegador e acesse o URL do seu aplicativo Web.
+2. Para testar a API, use uma ferramenta como o Postman ou o cURL.
+
+**Testando a API com o Swagger:**
+
+1. Insira o URL do seu aplicativo Web com o sufixo `/swagger-ui/index.html#/`.
+2. Ira listar todos os endpoints em nossa aplicação.
+3. abaixo uma foto realizando um solicitação HTTP do tipo **GET**.
+
+
+**Observações:**
+
+* **Somente é possível habilitar o GitHub Actions na criação do Web App com o SO Windows. Para Linux, deverá ser efetuado depois da criação do Recurso (Web App) através do Centro de Implantação.**
+* **Na aba Implantação, deixe o opção de Habilitar a Implantação Contínua e autorize o acesso do Azure em sua conta no GitHub.**
+* **Na aba Implantação, informe sua conta no GitHub, qual o Repositório e Branch para o Build e Deploy.**
+* **Ainda na aba Implantação, analise juntamente com seu Professor o arquivo YML gerado.**
+* **Na aba Rede, deixe o Acesso Público Ativado.**
+* **Na aba Monitoramento, deixe o Application Insights desabilitado para esse projeto.**
+* **Não usaremos Rótulos para esses Recursos.**
+
