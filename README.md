@@ -1,4 +1,4 @@
-# Api em Java SpringBoot Deploy no Azure.
+# Api em Java SpringBoot Deploy no Azure
 
 **Passo a passo para fazer deploy de uma aplicação Spring Boot no Azure, como um web app, com o código fonte da aplicação no GitHub:**
 
