@@ -16,8 +16,11 @@ jobs:
 
   - task: AzureWebApp@1
     inputs:
-      azureSubscription: Azure for Students(40e8f6d0-3344-46b2-b963-30ae2661fbae)
-      appType: webAppLinux
-      appName: java-app-fiap
+      azureSubscription: 'Azure for Students (40e8f6d0-3344-46b2-b963-30ae2661fbae)'
+      appType: 'webAppLinux'
+      appName: 'java-app-fiap'
+      deployToSlotOrASE: true
+      resourceGroupName: 'java-app-fiap_group'
+      slotName: 'production'
       package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-      runtimeStack: JAVA|17-java17
+      runtimeStack: 'JAVA|17-java17'
