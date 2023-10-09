@@ -23,7 +23,7 @@ steps:
     publishJUnitResults: false
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.17'
-    mavenVersionOption: 'Default'
+    jdkArchitectureOption: 'x64'  # Defina a arquitetura do JDK
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
