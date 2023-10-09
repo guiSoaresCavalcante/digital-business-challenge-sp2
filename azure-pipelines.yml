@@ -11,11 +11,6 @@ variables:
   appName: 'java-app-fiap'
 
 steps:
-- task: JavaToolInstaller@0
-  inputs:
-    javaVersion: $(java.version)
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: '8'
 
 - task: Maven@4
   inputs:
