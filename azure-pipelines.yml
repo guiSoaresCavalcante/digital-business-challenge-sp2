@@ -15,6 +15,7 @@ steps:
   inputs:
     javaVersion: $(java.version)
     jdkArchitectureOption: 'x64'
+    jdkSourceOption: '8'
 
 - task: Maven@4
   inputs:
