@@ -57,7 +57,7 @@ public class UsuarioController {
 		}
 	}
 
-	@GetMapping("/todosS")
+	@GetMapping("/todos")
 	public ResponseEntity<List<CadastroUsuarioDto>> listarAtivosEInativos() {
 		return ResponseEntity.ok(service.listarTodos());
 	}
