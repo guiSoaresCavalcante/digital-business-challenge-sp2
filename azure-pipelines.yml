@@ -19,5 +19,5 @@ jobs:
       azureSubscription: Azure for Students(40e8f6d0-3344-46b2-b963-30ae2661fbae)
       appType: webAppLinux
       appName: java-app-fiap
-      package: $(System.DefaultWorkingDirectory)/**/*.zip
+      package: '$(System.DefaultWorkingDirectory)/**/*.zip'
       runtimeStack: JAVA|17-java17
