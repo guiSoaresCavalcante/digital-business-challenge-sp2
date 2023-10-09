@@ -1,74 +1,22 @@
-# Maven package Java project Web App to Linux on Azure
-# Build your Java project and deploy it to Azure as a Linux web app
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
-trigger:
-- dev-main-db
-
-variables:
-
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '92ddc8a4-2d98-420c-97ae-4fff6be7db26'
-
-  # Web app name
-  webAppName: 'api-devops-cp'
-
-  # Environment name
-  environmentName: 'api-devops-cp'
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-
-stages:
-- stage: Build
-  displayName: Build stage
-  jobs:
-  - job: MavenPackageAndPublishArtifacts
-    displayName: Maven Package and Publish Artifacts
-    pool:
-      vmImage: $(vmImageName)
-
-    steps:
+  trigger:
+    - dev-main-db
+  pool:
+    vmImage: ubuntu-latest
+  steps:
     - task: Maven@4
       inputs:
-        mavenPomFile: 'pom.xml'
+        mavenPomFile: pom.xml
         mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
+        javaHomeOption: JDKVersion
         jdkVersionOption: '1.8'
-        jdkArchitectureOption: 'x64'
+        jdkArchitectureOption: x64
         publishJUnitResults: true
         testResultsFiles: '**/TEST-*.xml'
-        goals: 'package'
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files to artifact staging directory'
+        goals: package
+    - task: AzureWebApp@1
       inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
-
-    - upload: $(Build.ArtifactStagingDirectory)
-      artifact: drop
-
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - deployment: DeployLinuxWebApp
-    displayName: Deploy Linux Web App
-    environment: $(environmentName)
-    pool:
-      vmImage: $(vmImageName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: api-devops-cp'
-            inputs:
-              azureSubscription: $(azureSubscription)
-              appType: webAppLinux
-              appName: $(webAppName)
-              package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
+        azureSubscription: Azure for Students(40e8f6d0-3344-46b2-b963-30ae2661fbae)
+        appType: webAppLinux
+        appName: java-app-fiap
+        package: $(System.DefaultWorkingDirectory)/**/*.zip
+        runtimeStack: JAVA|17-java17
