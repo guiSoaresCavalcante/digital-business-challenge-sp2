@@ -1,25 +1,44 @@
-jobs:
-- job: job
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  - task: Maven@4
-    inputs:
-      mavenPomFile: 'pom.xml'
-      publishJUnitResults: false
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.17'
-      mavenVersionOption: 'Default'
-      mavenAuthenticateFeed: false
-      effectivePomSkip: false
-      sonarQubeRunAnalysis: false
+trigger:
+- dev-main-db
 
-  - task: AzureWebApp@1
-    inputs:
-      azureSubscription: 'Azure for Students (40e8f6d0-3344-46b2-b963-30ae2661fbae)'
-      appType: 'webAppLinux'
-      appName: 'java-app-fiap'
-      deployToSlotOrASE: true
-      resourceGroupName: 'java-app-fiap_group'
-      slotName: 'production'
-      runtimeStack: 'JAVA|17-java17'
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  maven.version: '3.8.7'
+  java.version: '17'
+  azureSubscription: 'Azure for Students (40e8f6d0-3344-46b2-b963-30ae2661fbae)'
+  appName: 'java-app-fiap'
+
+steps:
+- task: JavaToolInstaller@0
+  inputs:
+    javaVersion: $(java.version)
+
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenVersion: $(maven.version)
+    goals: 'package'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublishedArtifacts: 'target/*.jar'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: $(azureSubscription)
+    appType: 'webAppLinux'
+    appName: $(appName)
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deployToSlotOrASE: true
+    resourceGroupName: 'java-app-fiap_group'
+    slotName: 'production'
+    runtimeStack: 'JAVA|17-java17'
