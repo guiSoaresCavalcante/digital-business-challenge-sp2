@@ -22,7 +22,7 @@ az group create --name gruporecursos --location brazilsouth
 2. Execute os seguintes comandos para criar um servidor SQL Server, um banco de dados SQL Server e uma regra de firewall:
 
 ```
-az sql server create --location brazilsouth --resource-group gruporecursos --name sqlserver-app --admin-username admsql --admin-password dbacesspasswd@123 --enable-public-network true
+az sql server create -l brazilsouth -g gruporecursos -n sqlserver-app -u admsql -p dbacesspasswd@123 --enable-public-network true
 ```
 
 ```
