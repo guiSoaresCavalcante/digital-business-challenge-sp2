@@ -22,5 +22,4 @@ jobs:
       deployToSlotOrASE: true
       resourceGroupName: 'java-app-fiap_group'
       slotName: 'production'
-      package: '$(System.DefaultWorkingDirectory)/**/*.zip'
       runtimeStack: 'JAVA|17-java17'
