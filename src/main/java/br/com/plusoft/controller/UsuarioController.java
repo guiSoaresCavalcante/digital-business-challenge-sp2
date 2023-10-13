@@ -1,6 +1,6 @@
 package br.com.plusoft.controller;
 
-import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.plusoft.dto.AtualizarUsuarioDto;
 import br.com.plusoft.dto.CadastroUsuarioDto;
+import br.com.plusoft.dto.ListarUsuarioDto;
 import br.com.plusoft.entity.UsuarioEntity;
 import br.com.plusoft.servive.UsuarioService;
 import jakarta.validation.Valid;
@@ -34,10 +35,10 @@ public class UsuarioController {
 
 	@PostMapping("/cadastrar")
 	@Transactional
-	public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastroUsuarioDto usuario) {
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastroUsuarioDto usuario) {
 		try {
-			service.cadastrar(usuario);
-			return ResponseEntity.created(URI.create("/" + usuario.nome())).body("Usuario Cadastrado");
+			Long id = service.cadastrar(usuario);
+			return ResponseEntity.ok(id);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -57,12 +58,24 @@ public class UsuarioController {
 		}
 	}
 
-	@GetMapping("/todosUsuarios")
-	public ResponseEntity<List<CadastroUsuarioDto>> listarAtivosEInativos() {
+	@GetMapping("/todos")
+	public ResponseEntity<List<ListarUsuarioDto>> listarAtivosEInativos() {
 		return ResponseEntity.ok(service.listarTodos());
 	}
 
-	@PutMapping
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findByIdUsuario(@PathVariable Long id) {
+		try {
+
+			return ResponseEntity.ok(service.listarPorId(id));
+		} catch (Exception e) {
+			ArrayList<String> msg = new ArrayList<String>();
+			msg.add("Usuário não encontrado.");
+			return ResponseEntity.badRequest().body(msg);
+		}
+	}
+
+	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarUsuarioDto usuarioDto) {
 		try {
