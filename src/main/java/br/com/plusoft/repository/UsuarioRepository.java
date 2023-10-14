@@ -1,5 +1,6 @@
 package br.com.plusoft.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
     Page<UsuarioEntity> findAllByAtivoTrue(Pageable paginacao);
     UsuarioEntity findByEmail(String email);
-    
     Optional<UsuarioEntity> findByEmailAndSenha(String email, String senha);
+    Optional<UsuarioEntity> findById(Long id);
+    List<UsuarioEntity> findAll();
 }

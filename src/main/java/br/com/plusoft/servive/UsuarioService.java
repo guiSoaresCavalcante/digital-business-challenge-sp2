@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.plusoft.dto.AtualizarUsuarioDto;
 import br.com.plusoft.dto.CadastroUsuarioDto;
+import br.com.plusoft.dto.ListarUsuarioDto;
 import br.com.plusoft.entity.UsuarioEntity;
 import br.com.plusoft.repository.UsuarioRepository;
 
@@ -18,11 +19,12 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 
-	public void cadastrar(CadastroUsuarioDto usuarioDto) {
+	public Long cadastrar(CadastroUsuarioDto usuarioDto) {
 		if (repository.findByEmail(usuarioDto.email()) != null) {
 			throw new IllegalArgumentException("Email já cadastrado");
 		}
-		repository.save(new UsuarioEntity(usuarioDto));
+		UsuarioEntity usuarioEntity = repository.save(new UsuarioEntity(usuarioDto));
+		return usuarioEntity.getId();
 	}
 
 //    public Page<ListarUsuarioDto> listar(Pageable paginacao) {
@@ -33,14 +35,19 @@ public class UsuarioService {
 //        return repository.findAll(paginacao).map(ListarUsuarioDto::new);
 //    }
 //    
-	
+
 	public Optional<UsuarioEntity> findByEmailSenha(String email, String senha) {
-        return repository.findByEmailAndSenha(email, senha);
-    }
-	
-	public List<CadastroUsuarioDto> listarTodos() {
+		return repository.findByEmailAndSenha(email, senha);
+	}
+
+	public List<ListarUsuarioDto> listarTodos() {
 		List<UsuarioEntity> usuarios = repository.findAll();
-		return usuarios.stream().map(this::mapToDto).collect(Collectors.toList());
+		return usuarios.stream().map(this::mapToDtoListarUsuario).collect(Collectors.toList());
+	}
+
+	public List<ListarUsuarioDto> listarPorId(Long id) {
+		Optional<UsuarioEntity> usuarios = repository.findById(id);
+		return usuarios.stream().map(this::mapToDtoListarUsuario).collect(Collectors.toList());
 	}
 
 	public void atualizar(AtualizarUsuarioDto usuarioDto) {
@@ -51,8 +58,8 @@ public class UsuarioService {
 				usuarioAtualizado.setNome(usuarioDto.nome());
 			}
 
-			if (usuarioDto.sobrenome() != null) {
-				usuarioAtualizado.setSobrenome(usuarioDto.sobrenome());
+			if (usuarioDto.email() != null) {
+				usuarioAtualizado.setEmail(usuarioDto.email());
 			}
 		} else {
 			throw new IllegalArgumentException("Usuário não encontrado");
@@ -60,7 +67,7 @@ public class UsuarioService {
 
 	}
 
-	public void deletar(Long id) {
+	public void desativar(Long id) {
 		var usuario = repository.getReferenceById(id);
 		if (usuario != null) {
 			usuario.setAtivo(false);
@@ -69,8 +76,17 @@ public class UsuarioService {
 		}
 	}
 
-	private CadastroUsuarioDto mapToDto(UsuarioEntity entity) {
-		return new CadastroUsuarioDto(entity.getNome(), entity.getEmail(), entity.getSenha());
+	public void deletar(Long id) {
+		var usuario = repository.getReferenceById(id);
+		if (usuario != null) {
+			repository.deleteById(id);
+		} else {
+			throw new IllegalArgumentException("Usuário não encontrado");
+		}
+	}
+
+	private ListarUsuarioDto mapToDtoListarUsuario(UsuarioEntity entity) {
+		return new ListarUsuarioDto(entity.getId(), entity.getNome(), entity.getEmail(),entity.getDataCadastro());
 	}
 
 }
