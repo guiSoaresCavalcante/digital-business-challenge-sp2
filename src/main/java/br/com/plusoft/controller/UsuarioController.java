@@ -91,6 +91,7 @@ public class UsuarioController {
 	@Transactional
 	public ResponseEntity<String> deletar(@PathVariable Long id) {
 		try {
+			// service.desativar(id);
 			service.deletar(id);
 			return ResponseEntity.ok("Usuário deletado com sucesso");
 		} catch (Exception e) {

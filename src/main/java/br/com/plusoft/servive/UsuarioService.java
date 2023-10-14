@@ -67,10 +67,19 @@ public class UsuarioService {
 
 	}
 
-	public void deletar(Long id) {
+	public void desativar(Long id) {
 		var usuario = repository.getReferenceById(id);
 		if (usuario != null) {
 			usuario.setAtivo(false);
+		} else {
+			throw new IllegalArgumentException("Usuário não encontrado");
+		}
+	}
+
+	public void deletar(Long id) {
+		var usuario = repository.getReferenceById(id);
+		if (usuario != null) {
+			repository.deleteById(id);
 		} else {
 			throw new IllegalArgumentException("Usuário não encontrado");
 		}
