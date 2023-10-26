@@ -154,6 +154,12 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 
 - **DELETE**/usuarios/{id} (sem body!)
 
+#### Docker (Todo)
+- Atalho Docker Compose
+```
+sudo docker stop $(docker ps -aq) && docker-compose up -d --build && docker-compose ps
+
+```
 
 **Observações:**
 
