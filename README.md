@@ -156,12 +156,12 @@ az sql server firewall-rule create --resource-group gruporecursos --server sqlse
 
 #### Docker
 
-- Vai compilar seu código e também empacotá-lo e criará um jar utilizado no dockerfile
+- Vai compilar seu código e também empacotá-lo e criará um jar utilizado no dockerfile.
 ```
 mvn clean package
 
 ```
-- Atalho Docker Compose, executando um "stop", caso tenha feito um "start" anterior
+- Atalho Docker Compose, executando um "stop", caso tenha feito um "start" anterior & mostrando nome e porta que esta rodando.
 ```
 sudo docker stop $(docker ps -aq) && docker-compose up -d --build && docker-compose ps
 
