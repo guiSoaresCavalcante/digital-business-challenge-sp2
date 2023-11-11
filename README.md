@@ -1,177 +1,504 @@
-# Api em Java SpringBoot Deploy no Azure
+# digital-business-challenge-sp2
+Repositório referente a api em Spring boot para a entrega da sprint 2 do challenge plusoft
 
-**Passo a passo para fazer deploy de uma aplicação Spring Boot no Azure, como um web app, com o código fonte da aplicação no GitHub:**
+### Versão do Java: 17.0.5
+### Versão do Gradle: 7.2
+### Banco Usado: H2
 
-**Pré-requisitos:**
+### Cadastrar Usuário
 
-* Conta da Microsoft Azure
-* Grupo de recursos no Azure
-* Plano de serviço do Azure
-* Servidor SQL Server no Azure
-* Banco de dados SQL Server no Azure
-* Código-fonte da aplicação Spring Boot no GitHub
+Endpoint: `POST /usuarios`
 
-**Passo 1: Criar a infraestrutura do banco de dados no Azure**
+Este endpoint é usado para cadastrar um novo usuário.
 
-1. Abra o terminal e execute o seguinte comando para criar um grupo de recursos:
+Requisição:
+POST /usuarios HTTP/1.1
+Content-Type: application/json
 
-```
-az group create --name gruporecursos --location brazilsouth
-```
+      [
+            {
+              "nome": "Nome do Usuário",
+              "email": "email@example.com",
+              "senha": "senha123"
+            }
+      ]
 
-2. Execute os seguintes comandos para criar um servidor SQL Server, um banco de dados SQL Server e uma regra de firewall:
+Resposta:
+HTTP/1.1 201 Created
+Location: /usuarios/{id}
+Content-Type: text/plain
 
-```
-az sql server create -l brazilsouth -g gruporecursos -n sqlserver-app -u admsql -p dbacesspasswd@123 --enable-public-network true
-```
+Usuario Cadastrado
 
-```
-az sql db create --resource-group gruporecursos --server sqlserver-app --name dbapp --service-objective basic --backup-storage-redundancy local --zone-redundant false
-```
-- apenas para testes! esse regra permite acesso indefinido 
+Listar Usuários Ativos
 
-```
-az sql server firewall-rule create --resource-group gruporecursos --server sqlserver-app --name allowall --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255 
-```
+Endpoint: GET /usuarios/ativos
+Este endpoint é usado para listar os usuários ativos.
+
+Requisição:
+GET /usuarios/ativos HTTP/1.1
+
+Resposta:
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+      [
+        {
+          "id": 1,
+          "nome": "Nome do Usuário",
+          "email": "email@example.com"
+        },
+        {
+          "id": 2,
+          "nome": "Outro Usuário",
+          "email": "outro@example.com"
+        }
+      ]
 
 
-**Passo 2: Importar o projeto Spring Boot do GitHub**
+Listar Todos os Usuários
+Endpoint: GET /usuarios/todos
+Este endpoint é usado para listar todos os usuários, incluindo os ativos e inativos.
 
-1. Abra o Eclipse.
-2. No menu **Window** > **Show View** > **Other**, selecione **Git Repositories**.
-3. No menu **File** > **Import**, selecione **Projects from Git**.
-4. Na janela **Import Projects from Git**, selecione **Clone URI**.
-5. Na janela **Clone Git Repository**, informe a URL do repositório do GitHub do seu projeto Spring Boot.
-6. Clique em **Next**.
-7. Na janela **Select Repository Location**, selecione o local onde você deseja salvar o projeto.
-8. Clique em **Next**.
-9. Na janela **Select Branches**, selecione a branch que você deseja importar.
-10. Clique em **Finish**.
+Requisição:
+GET /usuarios/todos HTTP/1.1
 
-**Passo 3: Configurar a conexão com o banco de dados**
+Resposta:
+HTTP/1.1 200 OK
+Content-Type: application/json
 
-1. Abra o arquivo `application.properties` do seu projeto Spring Boot.
-2. Altere as propriedades `spring.datasource.url` e `spring.datasource.username` para o endereço do seu servidor SQL Server, o nome de usuário e a senha do banco de dados.
+    [
+      {
+        "id": 1,
+        "nome": "Nome do Usuário",
+        "email": "email@example.com"
+      },
+      {
+        "id": 2,
+        "nome": "Outro Usuário",
+        "email": "outro@example.com"
+      },
+      {
+        "id": 3,
+        "nome": "Usuário Inativo",
+        "email": "inativo@example.com"
+      }
+    ]
 
-**Passo 4: Criar um serviço de aplicativo no Azure**
 
-1. Acesse o portal da Azure.
-2. No menu **Web Apps**, clique em **Create**.
-3. Na página **Create Web App**, insira as seguintes informações:
-    * **Nome do aplicativo:** O nome do seu aplicativo Web no Azure.
-    * **Região:** A região do Azure onde você deseja implantar o aplicativo Web.
-    * **Plano de serviço:** O plano de serviço do Azure que você deseja usar para o aplicativo Web.
-    * **Tipo de aplicativo:** **Java**.
-    * **Tipo de implantação:** **Automático**.
-4. Clique em **Create**.
+Atualizar Usuário
+Endpoint: PUT /usuarios
+Este endpoint é usado para atualizar as informações de um usuário.
 
-**Passo 5: Implantar o aplicativo no Azure**
+Requisição:
+PUT /usuarios HTTP/1.1
+Content-Type: application/json
 
-1. No Eclipse, clique com o botão direito do mouse no projeto Spring Boot e selecione **Azure** > **Publish as Azure Web App
+    {
+      "id": 1,
+      "nome": "Nome Atualizado",
+      "email": "email@example.com"
+    }
 
-2. **Documentação para implantação de uma aplicação Spring Boot no Azure usando GitHub Actions**
+Resposta:
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Usuário atualizado com sucesso
 
-**Pré-requisitos**
+Deletar Usuário
+Endpoint: DELETE /usuarios/{id}
+Este endpoint é usado para deletar um usuário pelo seu ID.
 
-* Conta da Microsoft Azure
-* Grupo de recursos no Azure
-* Plano de serviço do Azure
-* Serviço de aplicativo no Azure
-* Código-fonte da aplicação Spring Boot no GitHub
-* GitHub Actions configurado no repositório do GitHub
+Requisição:
+DELETE /usuarios/1 HTTP/1.1
 
-**Passo 1: Criar o serviço de aplicativo no Azure**
+Resposta:
+HTTP/1.1 200 OK
+Content-Type: text/plain
 
-1. Acesse o portal da Azure.
-2. No menu **Web Apps**, clique em **Create**.
-3. Na página **Create Web App**, insira as seguintes informações:
-    * **Nome:** api-spring-boot-xx
-    * **Região:** Brasil South
-    * **Plano de serviço:** F1
-    * **Tipo de aplicativo:** Java
-    * **Tipo de implantação:** Automático
+Usuário deletado com sucesso!
 
-4. Na aba **Implementação**, selecione a opção **GitHub Actions** e clique em **Criar**.
-5. Na aba **GitHub Actions**, insira as seguintes informações:
-    * **Repositorio:** A URL do repositório do GitHub do seu projeto Spring Boot.
-    * **Branch:** A branch que você deseja implantar.
-6. Clique em **Salvar**.
 
-**Passo 2: Implantar o aplicativo no Azure**
+### Categoria Software
 
-1. No repositório do GitHub, faça um commit e push das alterações no código-fonte da aplicação.
-2. No portal da Azure, aguarde a conclusão da implantação.
+gerenciamento de categorias de software.
 
-**Passo 3: Testar o aplicativo**
+Cadastrar Categoria Software [POST]
 
-1. Abra o navegador e acesse o URL do seu aplicativo Web.
-2. Para testar a API, use uma ferramenta como o Postman ou o cURL.
+Cadastra uma nova categoria de software.
 
-**Testando a API com o Swagger:**
+    URL: /api/v1/categorias
+    Método: POST
+    Corpo da Requisição: JSON contendo os dados da categoria a ser cadastrada
+        Exemplo:
 
-1. Insira a URL do web app com o sufixo `/swagger-ui/index.html#/` para ter acesso a todos os endpoints da aplicação.
-2. Ira listar todos os endpoints em nossa aplicação.
-3. abaixo algumas fotos realizando um solicitação HTTP do tipo **POST** & **GET**.
+        {
+          "nome": "Categoria 1",
+          "descricao": "Descrição da Categoria 1"
+        }
 
-![alt text](./imgs/post1.png)
-![alt text](./imgs/post2.png)
-![alt text](./imgs/post3.png)
-![alt text](./imgs/post4.png)
-![alt text](./imgs/post5.png)
-![alt text](./imgs/post6.png)
+    Resposta de Sucesso:
+        Código: 201 CREATED
+        Corpo da Resposta: "Categoria Cadastrada"
 
-- Um exemplo de json para controler de usuário
+Listar Categorias Ativas [GET]
 
-- **POST** /usuarios/login:
-```
-{
-  "nome": "Leonardo Figueiras",
-  "email": "leo.figueiras@shareasale.com",
-  "senha": "lZ4'T*c2ny>1a#J!n~j\\"
-}
-```
+Obtém uma lista paginada das categorias de software ativas.
 
-- **POST** /usuarios/cadastrar:
-```
-{
-  "nome": "Leonardo Figueiras",
-  "email": "leo.figueiras@shareasale.com",
-  "senha": "lZ4'T*c2ny>1a#J!n~j\\"
-}
-```
+    URL: /categorias/ativos
+    Método: GET
+    Parâmetros da URL:
+        page (opcional): número da página desejada (padrão: 0)
+        size (opcional): número de itens por página (padrão: 20)
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: JSON contendo a lista paginada das categorias de software ativas
+            Exemplo:
 
-- **PUT** /usuarios/:
-```
-{
-  "id": 0,
-  "nome": "string",
-  "sobrenome": "string"
-}
+            {
+              "content": [
+                {
+                  "id": 1,
+                  "nome": "Categoria 1",
+                  "descricao": "Descrição da Categoria 1"
+                },
+                {
+                  "id": 2,
+                  "nome": "Categoria 2",
+                  "descricao": "Descrição da Categoria 2"
+                }
+              ],
+              "pageable": {
+                "pageNumber": 0,
+                "pageSize": 20
+              },
+              "totalPages": 1,
+              "totalElements": 2
+            }
 
-```
+Listar Todas as Categorias [GET]
 
-- **GET** /usuarios/todos (sem body!)
+Obtém uma lista paginada de todas as categorias de software (ativas e inativas).
 
-- **DELETE**/usuarios/{id} (sem body!)
+    URL: /categorias/todos
+    Método: GET
+    Parâmetros da URL:
+        page (opcional): número da página desejada (padrão: 0)
+        size (opcional): número de itens por página (padrão: 20)
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: JSON contendo a lista paginada de todas as categorias de software
+            Exemplo:
+            {
+              "content": [
+                {
+                  "id": 1,
+                  "nome": "Categoria 1",
+                  "descricao": "Descrição da Categoria 1"
+                },
+                {
+                  "id": 2,
+                  "nome": "Categoria 2",
+                  "descricao": "Descrição da Categoria 2"
+                }
+              ],
+              "pageable": {
+                "pageNumber": 0,
+                "pageSize": 20
+              },
+              "totalPages": 1,
+              "totalElements": 2
+            }
 
-#### Docker
+Atualizar Categoria Software [PUT]
 
-- Vai compilar seu código e também empacotá-lo e criará um jar utilizado no dockerfile.
-```
-mvn clean package
+Atualiza os dados de uma categoria de software existente.
 
-```
-- Atalho Docker Compose, executando um "stop", caso tenha feito um "start" anterior & mostrando nome e porta que esta rodando.
-```
-sudo docker stop $(docker ps -aq) && docker-compose up -d --build && docker-compose ps
+    URL: /v1/categorias
+    Método: PUT
+    Corpo da Requisição: JSON contendo os dados atualizados da categoria
+        Exemplo:
 
-```
 
-**Observações:**
+        {
+          "id": 1,
+          "nome": "Categoria 1 Atualizada",
+          "descricao": "Nova descrição da Categoria 1"
+        }
 
-* **Somente é possível habilitar o GitHub Actions na criação do Web App com o SO Windows. Para Linux, deverá ser efetuado depois da criação do Recurso (Web App) através do Centro de Implantação.**
-* **Na aba Implantação, deixe o opção de Habilitar a Implantação Contínua e autorize o acesso do Azure em sua conta no GitHub.**
-* **Na aba Implantação, informe sua conta no GitHub, qual o Repositório e Branch para o Build e Deploy.**
-* **Ainda na aba Implantação, analise o arquivo YML gerado.**
-* **Na aba Rede, deixe o Acesso Público Ativado.**
-* **Na aba Monitoramento, deixe o Application Insights desabilitado para esse projeto.**
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: "Categoria atualizada com sucesso"
+
+Deletar Categoria Software [DELETE]
+
+Deleta uma categoria de software existente.
+
+    URL: /categorias/{id}
+    Método: DELETE
+    Parâmetros da URL:
+        id: identificador único da categoria
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: "Categoria deletada com sucesso"
+
+
+
+### Recurso Software
+
+Cadastrar Recurso Software [POST]
+
+Cadastra um novo recurso de software.
+
+    URL: /recursos
+    Método: POST
+    Corpo da Requisição: JSON contendo os dados do recurso a ser cadastrado
+        Exemplo:
+
+        
+
+        {
+          "nome": "Recurso 1",
+          "descricao": "Descrição do Recurso 1"
+        }
+
+    Resposta de Sucesso:
+        Código: 201 CREATED
+        Corpo da Resposta: "Recurso Cadastrado"
+
+Listar Recursos Ativos [GET]
+
+Obtém uma lista paginada dos recursos de software ativos.
+
+    URL: /recursos/ativos
+    Método: GET
+    Parâmetros da URL:
+        page (opcional): número da página desejada (padrão: 0)
+        size (opcional): número de itens por página (padrão: 20)
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: JSON contendo a lista paginada dos recursos de software ativos
+            Exemplo:
+
+
+            {
+              "content": [
+                {
+                  "id": 1,
+                  "nome": "Recurso 1",
+                  "descricao": "Descrição do Recurso 1"
+                },
+                {
+                  "id": 2,
+                  "nome": "Recurso 2",
+                  "descricao": "Descrição do Recurso 2"
+                }
+              ],
+              "pageable": {
+                "pageNumber": 0,
+                "pageSize": 20
+              },
+              "totalPages": 1,
+              "totalElements": 2
+            }
+
+Listar Todos os Recursos [GET]
+
+Obtém uma lista paginada de todos os recursos de software (ativos e inativos).
+
+    URL: /recursos/todos
+    Método: GET
+    Parâmetros da URL:
+        page (opcional): número da página desejada (padrão: 0)
+        size (opcional): número de itens por página (padrão: 20)
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: JSON contendo a lista paginada de todos os recursos de software
+            Exemplo:
+
+            
+
+            {
+              "content": [
+                {
+                  "id": 1,
+                  "nome": "Recurso 1",
+                  "descricao": "Descrição do Recurso 1"
+                },
+                {
+                  "id": 2,
+                  "nome": "Recurso 2",
+                  "descricao": "Descrição do Recurso 2"
+                }
+              ],
+              "pageable": {
+                "pageNumber": 0,
+                "pageSize": 20
+              },
+              "totalPages": 1,
+              "totalElements": 2
+            }
+
+Atualizar Recurso Software [PUT]
+
+Atualiza os dados de um recurso de software existente.
+
+    URL: /recursos
+    Método: PUT
+    Corpo da Requisição: JSON contendo os dados atualizados do recurso
+        Exemplo:
+
+        
+
+        {
+          "id": 1,
+          "nome": "Recurso 1 Atualizado",
+          "descricao": "Nova descrição do Recurso 1"
+        }
+
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: "Recurso atualizado com sucesso"
+
+Deletar Recurso Software [DELETE]
+
+Deleta um recurso de software existente.
+
+    URL: /recursos/{id}
+    Método: DELETE
+    Parâmetros da URL:
+        id: identificador único do recurso
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: "Recurso deletado com sucesso"
+
+### Software Gestão
+Cadastrar Software Gestão [POST]
+
+Cadastra um novo software de gestão.
+
+    URL: /softwares
+    Método: POST
+    Corpo da Requisição: JSON contendo os dados do software a ser cadastrado
+        Exemplo:
+
+        {
+          "nome": "Software 1",
+          "versao": "1.0",
+          "descricao": "Descrição do Software 1"
+        }
+
+    Resposta de Sucesso:
+        Código: 201 CREATED
+        Corpo da Resposta: "Software Cadastrado"
+
+Listar Softwares Gestão Ativos [GET]
+
+Obtém uma lista paginada dos softwares de gestão ativos.
+
+    URL: /softwares/ativos
+    Método: GET
+    Parâmetros da URL:
+        page (opcional): número da página desejada (padrão: 0)
+        size (opcional): número de itens por página (padrão: 20)
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: JSON contendo a lista paginada dos softwares de gestão ativos
+            Exemplo:
+
+
+            {
+              "content": [
+                {
+                  "id": 1,
+                  "nome": "Software 1",
+                  "versao": "1.0",
+                  "descricao": "Descrição do Software 1"
+                },
+                {
+                  "id": 2,
+                  "nome": "Software 2",
+                  "versao": "2.0",
+                  "descricao": "Descrição do Software 2"
+                }
+              ],
+              "pageable": {
+                "pageNumber": 0,
+                "pageSize": 20
+              },
+              "totalPages": 1,
+              "totalElements": 2
+            }
+
+Listar Todos os Softwares Gestão [GET]
+
+Obtém uma lista paginada de todos os softwares de gestão (ativos e inativos).
+
+    URL: /softwares/todos
+    Método: GET
+    Parâmetros da URL:
+        page (opcional): número da página desejada (padrão: 0)
+        size (opcional): número de itens por página (padrão: 20)
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: JSON contendo a lista paginada de todos os softwares de gestão
+            Exemplo:
+
+
+            {
+              "content": [
+                {
+                  "id": 1,
+                  "nome": "Software 1",
+                  "versao": "1.0",
+                  "descricao": "Descrição do Software 1"
+                },
+                {
+                  "id": 2,
+                  "nome": "Software 2",
+                  "versao": "2.0",
+                  "descricao": "Descrição do Software 2"
+                }
+              ],
+              "pageable": {
+                "pageNumber": 0,
+                "pageSize": 20
+              },
+              "totalPages": 1,
+              "totalElements": 2
+            }
+
+Atualizar Software Gestão [PUT]
+
+Atualiza os dados de um software de gestão existente.
+
+    URL: /softwares
+    Método: PUT
+    Corpo da Requisição: JSON contendo os dados atualizados do software
+        Exemplo:
+
+
+        {
+          "id": 1,
+          "nome": "Software 1 Atualizado",
+          "versao": "2.0",
+          "descricao": "Nova descrição do Software 1"
+        }
+
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: "Software atualizado com sucesso"
+
+Deletar Software Gestão [DELETE]
+
+Deleta um software de gestão existente.
+
+    URL: /softwares/{id}
+    Método: DELETE
+    Parâmetros da URL:
+        id: identificador único do software
+    Resposta de Sucesso:
+        Código: 200 OK
+        Corpo da Resposta: "Software deletado com sucesso"
+
+
